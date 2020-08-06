@@ -1,6 +1,6 @@
-#include "ros/ros.h"
-#include "std_msgs/Float64MultiArray.h"
-#include "vector"
+#include <ros/ros.h>
+#include <std_msgs/Float64MultiArray.h>
+#include "../include/serial_helper.h"
 
 void dataCallback(const std_msgs::Float64MultiArray &msg) 
 {
@@ -16,8 +16,8 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "data_node");
     ros::NodeHandle n;
-    ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("data_topic", 10);
-    ros::Subscriber sub = n.subscribe("data_topic", 10, dataCallback);
+    ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("VDATA", 10);
+    ros::Subscriber sub = n.subscribe("PCDAT", 10, dataCallback);
     ros::Rate loop_rate(10); //10Hz
     while (ros::ok())
     {

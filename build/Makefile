@@ -374,19 +374,6 @@ std_msgs_generate_messages_cpp/fast:
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 #=============================================================================
-# Target rules for targets named data_node
-
-# Build rule for target.
-data_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 data_node
-.PHONY : data_node
-
-# fast build rule for target.
-data_node/fast:
-	$(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/build
-.PHONY : data_node/fast
-
-#=============================================================================
 # Target rules for targets named roscpp_generate_messages_eus
 
 # Build rule for target.
@@ -489,6 +476,19 @@ std_msgs_generate_messages_lisp: cmake_check_build_system
 std_msgs_generate_messages_lisp/fast:
 	$(MAKE) -f data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named serialPort_node
+
+# Build rule for target.
+serialPort_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 serialPort_node
+.PHONY : serialPort_node
+
+# fast build rule for target.
+serialPort_node/fast:
+	$(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/build
+.PHONY : serialPort_node/fast
 
 #=============================================================================
 # Target rules for targets named camera1394stereo_nodelet
@@ -1156,7 +1156,6 @@ help:
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... data_node"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
@@ -1165,6 +1164,7 @@ help:
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... serialPort_node"
 	@echo "... camera1394stereo_nodelet"
 	@echo "... camera1394stereo_node"
 	@echo "... camera1394stereo_gencfg"

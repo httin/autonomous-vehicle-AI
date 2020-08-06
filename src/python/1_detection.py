@@ -2,7 +2,7 @@ import rospy
 import ros_numpy
 from sensor_msgs.msg import Image, PointCloud2
 from stereo_msgs.msg import DisparityImage
-from std_msgs.msg import Float32MultiArray
+from std_msgs.msg import Float64MultiArray
 from cv_bridge import CvBridge
 import cv2
 import numpy as np
@@ -95,9 +95,8 @@ rospy.Subscriber('/stereo_camera/left/image_rect', Image, detect.subscribe_left)
 rospy.Subscriber('/stereo_camera/right/image_rect', Image, detect.subscribe_right)
 rospy.Subscriber('/stereo_camera/disparity', DisparityImage, detect.subscribe_disparity)
 # rospy.Subscriber('/stereo_camera/points2', PointCloud2, detect.subscribe_pc)
-pub = rospy.Publisher('My_Obstacles', Float32MultiArray, queue_size=10)
+pub = rospy.Publisher('My_Obstacles', Float64MultiArray, queue_size=10)
 rate = rospy.Rate(20)
-
 
 prototype_url = 'MobileNetSSD_deploy.prototxt'
 model_url = 'MobileNetSSD_deploy.caffemodel'
@@ -218,7 +217,7 @@ while not rospy.core.is_shutdown():
         # cv2.putText(result, 'ID: ' + str(obj['tracker_id']), (center_X, center_Y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
         # cv2.putText(result, 'z: ' + str(obj['pos'][2]), (center_X, center_Y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
         
-        if obj['pos'][2] >= 2:
+        if obj['pos'][2] <= 5:
             publish_data.append(np.concatenate((obj['pos'][1:4], [vx_mean, vy_mean]), axis = 0).tolist())
         curr_trackers.append(obj)
 
@@ -241,14 +240,15 @@ while not rospy.core.is_shutdown():
             if skip_flag == 1:
                 for obj in curr_trackers:
                     if obj['tracker_id'] == max_id:
-                        tracker = cv2.TrackerKCF_create()
-                        tracker.init(frame, tuple(box))
-                        # tracker = dlib.correlation_tracker()
-                        # rect = dlib.rectangle(xd, yd, xd + wd, yd + hd)
-                        # tracker.start_track(frame, rect)
-                        obj['tracker'] = tracker
-                        obj['box'] = np.array(box)
                         obj['detected'] = 1
+                        if iou_max <= 0.9:
+                            tracker = cv2.TrackerKCF_create()
+                            tracker.init(frame, tuple(box))
+                            # tracker = dlib.correlation_tracker()
+                            # rect = dlib.rectangle(xd, yd, xd + wd, yd + hd)
+                            # tracker.start_track(frame, rect)
+                            obj['tracker'] = tracker
+                            obj['box'] = np.array(box)                        
 
                         # cv2.rectangle(result, (xd, yd), ((xd + wd), (yd + hd)), (0, 255, 255), 2)
                         # cv2.putText(result, str(obj['tracker_id']), (center_Xd + 15, center_Yd), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 255), 2)

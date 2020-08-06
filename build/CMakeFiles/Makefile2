@@ -246,7 +246,7 @@ gtest/preinstall: gtest/gtest/preinstall
 gtest/CMakeFiles/gmock.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gmock.dir/build.make gtest/CMakeFiles/gmock.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gmock.dir/build.make gtest/CMakeFiles/gmock.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=20,21,22 "Built target gmock"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=18,19,20 "Built target gmock"
 .PHONY : gtest/CMakeFiles/gmock.dir/all
 
 # Build rule for subdir invocation for target.
@@ -278,7 +278,7 @@ clean: gtest/CMakeFiles/gmock.dir/clean
 gtest/CMakeFiles/gmock_main.dir/all:
 	$(MAKE) -f gtest/CMakeFiles/gmock_main.dir/build.make gtest/CMakeFiles/gmock_main.dir/depend
 	$(MAKE) -f gtest/CMakeFiles/gmock_main.dir/build.make gtest/CMakeFiles/gmock_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=23,24,25,26 "Built target gmock_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=21,22,23,24 "Built target gmock_main"
 .PHONY : gtest/CMakeFiles/gmock_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -329,7 +329,7 @@ gtest/gtest/preinstall:
 gtest/gtest/CMakeFiles/gtest.dir/all:
 	$(MAKE) -f gtest/gtest/CMakeFiles/gtest.dir/build.make gtest/gtest/CMakeFiles/gtest.dir/depend
 	$(MAKE) -f gtest/gtest/CMakeFiles/gtest.dir/build.make gtest/gtest/CMakeFiles/gtest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=27,28 "Built target gtest"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=25,26 "Built target gtest"
 .PHONY : gtest/gtest/CMakeFiles/gtest.dir/all
 
 # Build rule for subdir invocation for target.
@@ -361,7 +361,7 @@ clean: gtest/gtest/CMakeFiles/gtest.dir/clean
 gtest/gtest/CMakeFiles/gtest_main.dir/all: gtest/gtest/CMakeFiles/gtest.dir/all
 	$(MAKE) -f gtest/gtest/CMakeFiles/gtest_main.dir/build.make gtest/gtest/CMakeFiles/gtest_main.dir/depend
 	$(MAKE) -f gtest/gtest/CMakeFiles/gtest_main.dir/build.make gtest/gtest/CMakeFiles/gtest_main.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=29,30 "Built target gtest_main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=27,28 "Built target gtest_main"
 .PHONY : gtest/gtest/CMakeFiles/gtest_main.dir/all
 
 # Build rule for subdir invocation for target.
@@ -390,7 +390,7 @@ clean: gtest/gtest/CMakeFiles/gtest_main.dir/clean
 # Directory level rules for directory data_pkg
 
 # Convenience name for "all" pass in the directory.
-data_pkg/all: data_pkg/CMakeFiles/data_node.dir/all
+data_pkg/all: data_pkg/CMakeFiles/serialPort_node.dir/all
 
 .PHONY : data_pkg/all
 
@@ -402,7 +402,6 @@ data_pkg/clean: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/c
 data_pkg/clean: data_pkg/CMakeFiles/roscpp_generate_messages_cpp.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
-data_pkg/clean: data_pkg/CMakeFiles/data_node.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/clean
@@ -411,6 +410,7 @@ data_pkg/clean: data_pkg/CMakeFiles/std_msgs_generate_messages_nodejs.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/roscpp_generate_messages_lisp.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/std_msgs_generate_messages_eus.dir/clean
 data_pkg/clean: data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+data_pkg/clean: data_pkg/CMakeFiles/serialPort_node.dir/clean
 
 .PHONY : data_pkg/clean
 
@@ -640,57 +640,6 @@ data_pkg/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean:
 
 # clean rule for target.
 clean: data_pkg/CMakeFiles/std_msgs_generate_messages_cpp.dir/clean
-
-.PHONY : clean
-
-#=============================================================================
-# Target rules for target data_pkg/CMakeFiles/data_node.dir
-
-# All Build rule for target.
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_py.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_py.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_cpp.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_lisp.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_eus.dir/all
-data_pkg/CMakeFiles/data_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
-	$(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/depend
-	$(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=18,19 "Built target data_node"
-.PHONY : data_pkg/CMakeFiles/data_node.dir/all
-
-# Include target in all.
-all: data_pkg/CMakeFiles/data_node.dir/all
-
-.PHONY : all
-
-# Build rule for subdir invocation for target.
-data_pkg/CMakeFiles/data_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nguyen/hien_ws/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 data_pkg/CMakeFiles/data_node.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/nguyen/hien_ws/build/CMakeFiles 0
-.PHONY : data_pkg/CMakeFiles/data_node.dir/rule
-
-# Convenience name for target.
-data_node: data_pkg/CMakeFiles/data_node.dir/rule
-
-.PHONY : data_node
-
-# clean rule for target.
-data_pkg/CMakeFiles/data_node.dir/clean:
-	$(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/clean
-.PHONY : data_pkg/CMakeFiles/data_node.dir/clean
-
-# clean rule for target.
-clean: data_pkg/CMakeFiles/data_node.dir/clean
 
 .PHONY : clean
 
@@ -947,6 +896,57 @@ data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean:
 
 # clean rule for target.
 clean: data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target data_pkg/CMakeFiles/serialPort_node.dir
+
+# All Build rule for target.
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_py.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_py.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_eus.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_nodejs.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_cpp.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_cpp.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_nodejs.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_nodejs.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/roscpp_generate_messages_lisp.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_eus.dir/all
+data_pkg/CMakeFiles/serialPort_node.dir/all: data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/all
+	$(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/depend
+	$(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/nguyen/hien_ws/build/CMakeFiles --progress-num=29,30,31 "Built target serialPort_node"
+.PHONY : data_pkg/CMakeFiles/serialPort_node.dir/all
+
+# Include target in all.
+all: data_pkg/CMakeFiles/serialPort_node.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+data_pkg/CMakeFiles/serialPort_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nguyen/hien_ws/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 data_pkg/CMakeFiles/serialPort_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/nguyen/hien_ws/build/CMakeFiles 0
+.PHONY : data_pkg/CMakeFiles/serialPort_node.dir/rule
+
+# Convenience name for target.
+serialPort_node: data_pkg/CMakeFiles/serialPort_node.dir/rule
+
+.PHONY : serialPort_node
+
+# clean rule for target.
+data_pkg/CMakeFiles/serialPort_node.dir/clean:
+	$(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/clean
+.PHONY : data_pkg/CMakeFiles/serialPort_node.dir/clean
+
+# clean rule for target.
+clean: data_pkg/CMakeFiles/serialPort_node.dir/clean
 
 .PHONY : clean
 

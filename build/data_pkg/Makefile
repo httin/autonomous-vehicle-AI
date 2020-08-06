@@ -56,6 +56,16 @@ CMAKE_BINARY_DIR = /home/nguyen/hien_ws/build
 #=============================================================================
 # Targets provided globally by CMake.
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
@@ -77,16 +87,6 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
 
 # Special rule for the target test
 test:
@@ -271,21 +271,6 @@ std_msgs_generate_messages_cpp/fast:
 .PHONY : std_msgs_generate_messages_cpp/fast
 
 # Convenience name for target.
-data_pkg/CMakeFiles/data_node.dir/rule:
-	cd /home/nguyen/hien_ws/build && $(MAKE) -f CMakeFiles/Makefile2 data_pkg/CMakeFiles/data_node.dir/rule
-.PHONY : data_pkg/CMakeFiles/data_node.dir/rule
-
-# Convenience name for target.
-data_node: data_pkg/CMakeFiles/data_node.dir/rule
-
-.PHONY : data_node
-
-# fast build rule for target.
-data_node/fast:
-	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/build
-.PHONY : data_node/fast
-
-# Convenience name for target.
 data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/rule:
 	cd /home/nguyen/hien_ws/build && $(MAKE) -f CMakeFiles/Makefile2 data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/rule
 .PHONY : data_pkg/CMakeFiles/roscpp_generate_messages_eus.dir/rule
@@ -405,32 +390,74 @@ std_msgs_generate_messages_lisp/fast:
 	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make data_pkg/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
 .PHONY : std_msgs_generate_messages_lisp/fast
 
-src/publish.o: src/publish.cpp.o
+# Convenience name for target.
+data_pkg/CMakeFiles/serialPort_node.dir/rule:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f CMakeFiles/Makefile2 data_pkg/CMakeFiles/serialPort_node.dir/rule
+.PHONY : data_pkg/CMakeFiles/serialPort_node.dir/rule
 
-.PHONY : src/publish.o
+# Convenience name for target.
+serialPort_node: data_pkg/CMakeFiles/serialPort_node.dir/rule
+
+.PHONY : serialPort_node
+
+# fast build rule for target.
+serialPort_node/fast:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/build
+.PHONY : serialPort_node/fast
+
+src/serialPort_node.o: src/serialPort_node.cpp.o
+
+.PHONY : src/serialPort_node.o
 
 # target to build an object file
-src/publish.cpp.o:
-	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/src/publish.cpp.o
-.PHONY : src/publish.cpp.o
+src/serialPort_node.cpp.o:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serialPort_node.cpp.o
+.PHONY : src/serialPort_node.cpp.o
 
-src/publish.i: src/publish.cpp.i
+src/serialPort_node.i: src/serialPort_node.cpp.i
 
-.PHONY : src/publish.i
+.PHONY : src/serialPort_node.i
 
 # target to preprocess a source file
-src/publish.cpp.i:
-	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/src/publish.cpp.i
-.PHONY : src/publish.cpp.i
+src/serialPort_node.cpp.i:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serialPort_node.cpp.i
+.PHONY : src/serialPort_node.cpp.i
 
-src/publish.s: src/publish.cpp.s
+src/serialPort_node.s: src/serialPort_node.cpp.s
 
-.PHONY : src/publish.s
+.PHONY : src/serialPort_node.s
 
 # target to generate assembly for a file
-src/publish.cpp.s:
-	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/data_node.dir/build.make data_pkg/CMakeFiles/data_node.dir/src/publish.cpp.s
-.PHONY : src/publish.cpp.s
+src/serialPort_node.cpp.s:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serialPort_node.cpp.s
+.PHONY : src/serialPort_node.cpp.s
+
+src/serial_helper.o: src/serial_helper.cpp.o
+
+.PHONY : src/serial_helper.o
+
+# target to build an object file
+src/serial_helper.cpp.o:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serial_helper.cpp.o
+.PHONY : src/serial_helper.cpp.o
+
+src/serial_helper.i: src/serial_helper.cpp.i
+
+.PHONY : src/serial_helper.i
+
+# target to preprocess a source file
+src/serial_helper.cpp.i:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serial_helper.cpp.i
+.PHONY : src/serial_helper.cpp.i
+
+src/serial_helper.s: src/serial_helper.cpp.s
+
+.PHONY : src/serial_helper.s
+
+# target to generate assembly for a file
+src/serial_helper.cpp.s:
+	cd /home/nguyen/hien_ws/build && $(MAKE) -f data_pkg/CMakeFiles/serialPort_node.dir/build.make data_pkg/CMakeFiles/serialPort_node.dir/src/serial_helper.cpp.s
+.PHONY : src/serial_helper.cpp.s
 
 # Help Target
 help:
@@ -438,6 +465,7 @@ help:
 	@echo "... all (the default if no target is provided)"
 	@echo "... clean"
 	@echo "... depend"
+	@echo "... list_install_components"
 	@echo "... std_msgs_generate_messages_py"
 	@echo "... roscpp_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_eus"
@@ -447,8 +475,6 @@ help:
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... rosgraph_msgs_generate_messages_cpp"
 	@echo "... std_msgs_generate_messages_cpp"
-	@echo "... list_install_components"
-	@echo "... data_node"
 	@echo "... roscpp_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
@@ -458,12 +484,16 @@ help:
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... std_msgs_generate_messages_eus"
 	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... serialPort_node"
 	@echo "... install/strip"
 	@echo "... install/local"
 	@echo "... install"
-	@echo "... src/publish.o"
-	@echo "... src/publish.i"
-	@echo "... src/publish.s"
+	@echo "... src/serialPort_node.o"
+	@echo "... src/serialPort_node.i"
+	@echo "... src/serialPort_node.s"
+	@echo "... src/serial_helper.o"
+	@echo "... src/serial_helper.i"
+	@echo "... src/serial_helper.s"
 .PHONY : help
 
 

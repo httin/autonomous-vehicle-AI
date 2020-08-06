@@ -2,15 +2,15 @@ cmake_minimum_required(VERSION 3.0.2)
 project(data_pkg)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
-add_compile_options(-lserial)
-add_compile_options(-lpthread)
+add_compile_options(-g -Wall -std=c++11 -lpthread)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  rosconsole
+  roscpp_serialization
 )
 
 ## System dependencies are found with CMake's conventions
@@ -116,7 +116,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -133,7 +133,10 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(data_node src/publish.cpp)
+add_executable(serialPort_node 
+  src/serialPort_node.cpp
+  src/serial_helper.cpp
+  )
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -143,11 +146,12 @@ add_executable(data_node src/publish.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
-add_dependencies(data_node ${data_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(serialPort_node ${serialPort_node_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(data_node
+target_link_libraries(serialPort_node
   ${catkin_LIBRARIES}
+  serial # for libserial, it's a replacement of '-lserial'
 )
 
 #############
@@ -166,9 +170,9 @@ target_link_libraries(data_node
 
 ## Mark executables for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_executables.html
-# install(TARGETS ${PROJECT_NAME}_node
-#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+install(TARGETS serialPort_node
+  RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark libraries for installation
 ## See http://docs.ros.org/melodic/api/catkin/html/howto/format1/building_libraries.html

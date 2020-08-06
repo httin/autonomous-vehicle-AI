@@ -1,28 +1,39 @@
 #pragma once
 
 #include <libserial/SerialPort.h>
+#include <ros/ros.h>
+#include <std_msgs/Float64MultiArray.h>
 #include "json.hpp"
 
 #include <cstdlib>
+#include <cstdint> // type variables: int64_t, uint8_t...
 #include <fstream>
 #include <iostream>
 #include <unistd.h>
+#include <chrono> // for timestamp since epoch
+#include <iomanip> // for setprecision, setfill
 
 using namespace LibSerial;
 using namespace std;
+using namespace std::chrono;
 namespace nh = nlohmann;
 
 constexpr const char* const USB_SERIAL_PORT = "/dev/ttyUSB1" ;
 constexpr const char* const IMU_SERIAL_PORT = "/dev/ttyUSB2" ;
 
+#define INFO(thread, message) "["#thread": " << hmsCurrent() << "] " << message << '\n'
+
 typedef struct my_serials {
     SerialPort      *usb_port;
     SerialPort      *imu_port;
 	std::string     imuReadData;
-    std::string     usbDataString;
+    std::string     usbReadData;
+    std::ofstream   log_ofs; // for logging file
     pthread_mutex_t usb_lockWrite;
     pthread_mutex_t usb_lockRead;
+    pthread_t imu_thread_id;
 } my_serials_t;
+
 
 namespace coordinate_ns {
 	typedef struct mapData {
@@ -40,3 +51,7 @@ void config_serial(LibSerial::SerialPort *, LibSerial::BaudRate, LibSerial::Char
 
 std::vector<std::string> split(const std::string& s, char seperator);
 
+std::string checkSumToString(uint8_t);
+std::string formatMessage(std::string &);
+std::string msTimeToString(int64_t);
+std::string hmsCurrent();
