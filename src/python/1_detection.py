@@ -89,13 +89,13 @@ class Detection():
         pc = ros_numpy.numpify(msg)
         self.pc = [pc['x'], pc['y'], pc['z']]
 
-rospy.init_node('object_detection')
+rospy.init_node('My_Detection')
 detect = Detection()
 rospy.Subscriber('/stereo_camera/left/image_rect', Image, detect.subscribe_left)
 rospy.Subscriber('/stereo_camera/right/image_rect', Image, detect.subscribe_right)
 rospy.Subscriber('/stereo_camera/disparity', DisparityImage, detect.subscribe_disparity)
 # rospy.Subscriber('/stereo_camera/points2', PointCloud2, detect.subscribe_pc)
-pub = rospy.Publisher('My_Obstacles', Float64MultiArray, queue_size=10)
+pub = rospy.Publisher('OBSTT', Float64MultiArray, queue_size=10)
 rate = rospy.Rate(20)
 
 prototype_url = 'MobileNetSSD_deploy.prototxt'

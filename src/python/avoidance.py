@@ -8,6 +8,7 @@ import json
 import math
 import time
 import os
+from datetime import datetime
 
 def velocity_distance(obstacles, r_rob, pos, yaw, start, stop, phi_max, safety):
     start = math.floor(start)
@@ -26,7 +27,7 @@ def velocity_distance(obstacles, r_rob, pos, yaw, start, stop, phi_max, safety):
             # print('obstacle', obstacle, pos, yaw)
             # print('x_new, y_new =', x, ',', y)
             if y < - (obstacle[2] + r_rob):
-                print('Out of sight!')
+                # print('Out of sight!')
                 continue
             # if x**2 + y**2 - r**2 < 0:
             #     if t == start:
@@ -287,21 +288,27 @@ def robot_coordinate(pos, yaw, points):
 
 class Avoidance():
     def __init__(self):
-        self.obj = np.array([])
+        self.obj = []
+        self.VDATA = []
+        self.new_obj = 0
+        self.new_VDATA = 0
     def subscribe_obj(self, msg):
         self.obj = np.array(msg.data)
         self.obj.reshape((5, int(self.pos.shape[0]/5)))
+        self.obj.tolist()
+        self.new_obj = 1
     def subscribe_VDATA(self, msg):
         self.VDATA = msg.data
+        self.VDATA.tolist()
+        self.new_VDATA = 1
 
 rospy.init_node('My_Avoidance')
 avoid = Avoidance()
-rate = rospy.Rate(20)
-rospy.Subscriber('My_Obstacles', Float64MultiArray, avoid.subscribe_obj)
+rospy.Subscriber('OBSTT', Float64MultiArray, avoid.subscribe_obj)
 rospy.Subscriber('VDATA', Float64MultiArray, avoid.subscribe_VDATA)
 pub = rospy.Publisher('PCDAT', Float64MultiArray, queue_size=10)
 rate = rospy.Rate(20)
-# //////////////////Simulate///////////////////////
+# /////////////////////////////////////////////////
 draw = 0
 dist_goal = 1 # (m) distance between robot_pos and final_goal where the robot will stop
 r_rob = 0.2 # (m) radius of the robot
@@ -342,38 +349,53 @@ sqrt = math.sqrt
 pi = math.pi
 # //////////////////Init///////////////////////////
 f = open('data.txt', 'w')
+path = '/home/nguyen/hien_ws/map_out'
+len_path = 0
 count = 0
-while len(input_data) == 0:
-    if os.path.isfile('map_out.txt'):
-        json_input = open('map_out.txt')
-        input_path = json.load(json_input)
-len_path = len(input_path)
-final_goal = [input_path[-1]['x'], input_path[-1]['y']]
-i_finalgoal = len_path - 1
 # /////////////////////////////////////////////////
 start = time.time()
-# while not rospy.is_shutdown():
-while True:
+while not rospy.is_shutdown():
+    # //////////////////Read map///////////////////////
+    if len_path == 0: print 'Waiting to read map...'
+    while len_path == 0:    
+        if os.path.isfile(path):
+            json_input = open(path)
+            input_path = json.load(json_input)
+            print 'Successfully read the map!'
+            os.remove(path)
+            len_path = len(input_path)
+            print 'Length of the map:', len_path
+            final_goal = [input_path[-1]['x'], input_path[-1]['y']]
+            i_finalgoal = len_path - 1   
     # print('Count:', count)   
     # //////////////////Update/////////////////////////
     pre_obs = np.copy(detected)
     pre_detectedflag = detected_flag
-    robot_pos = [avoid.VDATA[0], avoid.VDATA[1]]
-    i_curr = avoid.VDATA[3]
-    robot_yaw = avoid.VDATA[2]  
+    robot_pos = []
+    while len(robot_pos) == 0:
+        if avoid.new_VDATA == 1:
+            robot_pos = [avoid.VDATA[0], avoid.VDATA[1]]
+            i_curr = avoid.VDATA[3]
+            robot_yaw = avoid.VDATA[2] 
+            avoid.new_VDATA == 0
+    new = None
+    while new is None:
+        if avoid.new_obj == 1:
+            new = avoid.obj
+            avoid.new_obj == 0
     append = detected.append
-    for obj in avoid.obj:
+    for obj in new:
         x = obj[0]*sin(robot_yaw)+obj[1]*cos(robot_yaw)+robot_pos[0]
         y = -obj[0]*cos(robot_yaw)+obj[1]*sin(robot_yaw)+robot_pos[1]
-        w = abs(obj[2]*sin(robot_yaw))
+        w = obj[2]
         vx = obj[3]*sin(robot_yaw)+obj[4]*cos(robot_yaw)
         vy = -obj[3]*cos(robot_yaw)+obj[4]*sin(robot_yaw)
         append([x, y, w, vx, vy])
     len_detected = len(detected)
     # print('detected', detected)      
     step = 1 if i_curr<=i_finalgoal else -1
-    f.write(str(avoid.VDATA) + str(avoid.obj) + '\n')
-    f.flush()
+    # f.write(str(avoid.VDATA) + str(avoid.obj) + '\n')
+    # f.flush()
     # //////////////////Draw///////////////////////////
     if draw == 1:
         if p_rob == [] and p_obs == []:
@@ -405,7 +427,7 @@ while True:
         # ax.plot(x, tan(robot_yaw)*(x - robot_pos[0]) + robot_pos[1])
     # /////////////////////////////////////////////////
     if sqrt((robot_pos[0] - final_goal[0])**2 + (robot_pos[1] - final_goal[1])**2) > dist_goal:
-        start_1 = time.time()
+        # start_1 = time.time()
         # print('robot_pos', robot_pos, 'robot_yaw', robot_yaw)
         # print('i_curr', i_curr, 'i_goal', i_goal, 'i_finalgoal', i_finalgoal)
         temp = 0
@@ -471,8 +493,9 @@ while True:
                 # print('phi_goal', phi_goal)
                 v_final, phi_final = objective_function(robot_pos, robot_yaw, i_curr, new_intervals, input_path, phi_goal, v_max, T_imp, old_phifinal)
                 # print('v_final', v_final, 'phi_final', phi_final)
+                phi_final = - phi_final
                 old_phifinal = phi_final
-                msg.data = np.array([detected_flag, v_final, phi_final])
+                msg.data = np.array([v_final, phi_final])
                 pub.publish(msg)
                 # count = count + 1
             else:
@@ -483,17 +506,23 @@ while True:
                 if draw == 1:
                     p_goal[0].remove()
                     p_goal = plt.plot(final_goal[0], final_goal[1], "ob")
-        else:
-            msg.data = np.array([detected_flag])
-            pub.publish(msg)
-        end_1 = time.time()
-        total_time.append(end_1 - start_1)
-        if draw == 1:
-            plt.pause(0.1)
-# print('The end!')
+        # end_1 = time.time()
+        # total_time.append(end_1 - start_1)      
+    else:
+        print 'Robot reached its destination.'
+        len_path = 0
+
+    if detected_flag == 0:
+        f.write(str(datetime.now()) + ' ' + str(avoid.VDATA) + ' ' + str(avoid.obj) + '\n')
+    else:
+        f.write(str(datetime.now()) + ' ' + str(avoid.VDATA) + ' ' + str(avoid.obj) + ' ' + str(v_final) + ' ' + str(phi_final) + '\n')
+    f.flush()  
+    if draw == 1:
+        plt.pause(0.1)
+
 f.close()
-if len(total_time) > 0:
-    max = max(total_time)
+# if len(total_time) > 0:
+#     max = max(total_time)
     # print('Max execution time:', max)
 if draw == 1:
     plt.show()

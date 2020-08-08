@@ -41,26 +41,28 @@ void coordinate_ns::to_json(nh::json& j, const coordinate_ns::mapData_t& val)
 
 std::string checkSumToString(uint8_t cksum)
 {
-    char buf[2];
+    char buf[3];
 
     buf[0] = (cksum & 0xF0) >> 4; // high byte
     buf[0] += (buf[0] < 10) ? 48 : 55;
     buf[1] = cksum & 0x0F; // low byte
     buf[1] += (buf[1] < 10) ? 48 : 55;
+    buf[2] = 0; // NULL-terminated
 
     std::string res(buf);
     return res;
 }
 
-std::string formatMessage(std::string &msg)
+std::string formatMessage(std::string msg)
 {
+    stringstream ss;
     uint8_t checkSum = 0;
-    std::string cksum;
     for (std::size_t i = 0; i < msg.length(); ++i)
     {
         checkSum ^= msg.at(i);
     }
-    return "$" + msg + checkSumToString(checkSum) + "\r\n";
+    ss << "$" << msg << checkSumToString(checkSum) << "\r\n";
+    return ss.str();
 }
 
 std::string msTimeToString(int64_t ms_from_epoch)
@@ -84,6 +86,6 @@ std::string msTimeToString(int64_t ms_from_epoch)
 
 std::string hmsCurrent()
 {
-    milliseconds x = duration_cast<milliseconds>(system_clock::now().time_since_epoch());
-    return msTimeToString(x.count());
+    return msTimeToString(duration_cast<milliseconds>
+        (system_clock::now().time_since_epoch()).count());
 }

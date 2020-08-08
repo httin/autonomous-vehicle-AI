@@ -14,7 +14,7 @@ void dataCallback(const std_msgs::Float64MultiArray &msg)
 
 int main(int argc, char **argv)
 {
-    ros::init(argc, argv, "data_node");
+    ros::init(argc, argv, "publish_node");
     ros::NodeHandle n;
     ros::Publisher pub = n.advertise<std_msgs::Float64MultiArray>("VDATA", 10);
     ros::Subscriber sub = n.subscribe("PCDAT", 10, dataCallback);

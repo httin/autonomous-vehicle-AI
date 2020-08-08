@@ -18,20 +18,24 @@ using namespace std;
 using namespace std::chrono;
 namespace nh = nlohmann;
 
-constexpr const char* const USB_SERIAL_PORT = "/dev/ttyUSB1" ;
-constexpr const char* const IMU_SERIAL_PORT = "/dev/ttyUSB2" ;
+constexpr const char* const USB_SERIAL_PORT = "/dev/ttyUSB2" ;
+constexpr const char* const IMU_SERIAL_PORT = "/dev/ttyUSB1" ;
 
-#define INFO(thread, message) "["#thread": " << hmsCurrent() << "] " << message << '\n'
+#define DEBUG 2
+#define INFO(thread, message) "["#thread": "<<hmsCurrent()<<"] "<<message
 
 typedef struct my_serials {
     SerialPort      *usb_port;
     SerialPort      *imu_port;
 	std::string     imuReadData;
     std::string     usbReadData;
+	ros::Publisher  pub;
+	ros::Subscriber sub;
     std::ofstream   log_ofs; // for logging file
     pthread_mutex_t usb_lockWrite;
     pthread_mutex_t usb_lockRead;
     pthread_t imu_thread_id;
+	pthread_t usb_thread_id;
 } my_serials_t;
 
 
@@ -52,6 +56,6 @@ void config_serial(LibSerial::SerialPort *, LibSerial::BaudRate, LibSerial::Char
 std::vector<std::string> split(const std::string& s, char seperator);
 
 std::string checkSumToString(uint8_t);
-std::string formatMessage(std::string &);
+std::string formatMessage(std::string);
 std::string msTimeToString(int64_t);
 std::string hmsCurrent();
