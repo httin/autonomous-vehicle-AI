@@ -1,10 +1,11 @@
 dlib-19.6/
 opencv_build/
 .vscode/
-*.log
+
 *.o
 *.cmake
 *.make
+*.bag
 map_out*
 a.out
 data.txt

@@ -18,10 +18,10 @@ using namespace std;
 using namespace std::chrono;
 namespace nh = nlohmann;
 
-constexpr const char* const USB_SERIAL_PORT = "/dev/ttyUSB2" ;
-constexpr const char* const IMU_SERIAL_PORT = "/dev/ttyUSB1" ;
+constexpr const char* const USB_SERIAL_PORT = "/dev/ttyUSB1" ;
+constexpr const char* const IMU_SERIAL_PORT = "/dev/ttyUSB2" ;
 
-#define DEBUG 2
+#define DEBUG 1
 #define INFO(thread, message) "["#thread": "<<hmsCurrent()<<"] "<<message
 
 typedef struct my_serials {
