@@ -41,7 +41,9 @@
   <node pkg="rqt_reconfigure" type="rqt_reconfigure" name="rqt_reconfigure"/>
   
   <node pkg="data_pkg" name="My_Detection" type="detection.py" output="screen"/>
-
+  
   <node pkg="data_pkg" name="My_Avoidance" type="avoidance.py" output="screen"/>
+
+  <!--<node pkg="data_pkg" name="serialPort_node" type="serialPort_node" output="screen"/>-->
 
 </launch>

@@ -21,7 +21,7 @@ def get_object(net, image, conf_threshold, h, w):
             if idx == 2 or 6 <= idx <= 7 or 14 <= idx <= 15:
                 box = detections[0, 0, i, 3:7] * np.array([w, h, w, h])
                 (startX, startY, endX, endY) = box.astype("int")
-                box = [startX, startY, endX - startX, endY - startY]
+                box = [startX, startY, endX - startX, endY - startY, idx]
                 boxes.append(box)
     return boxes
 
@@ -98,6 +98,9 @@ publish_data = []
 # output_file = open('/home/nguyen/hien_ws/test.txt', 'w')
 sin = math.sin
 cos = math.cos
+classes = ['Background', 'Aeroplane', 'Bicycle', 'Bird', 'Boat', 'Bottle', 'Bus', 
+            'Car', 'Cat', 'Chair', 'Cow', 'Dining table', 'Dog', 'Horse', 'Motorbike', 
+            'Person', 'Potted plant', 'Sheep', 'Sofa', 'Train', 'TV/monitor']
 
 start = time.time()
 
@@ -179,10 +182,10 @@ while not rospy.is_shutdown():
                 if draw == 1:
                     cv2.rectangle(result, (x, y), (x + w, y + h), (0, 255, 0), 2)
                     cv2.circle(result, (center_X, center_Y), 4, (0, 255, 0), -1)
-                    cv2.putText(result, 'ID: ' + str(obj['tracker_id']), (center_X, center_Y - 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
-                    cv2.putText(result, 'z: ' + str(pos_z), (center_X - 30, center_Y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
-                    cv2.putText(result, 'x: ' + str(pos_x), (center_X - 30, center_Y + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
-                    cv2.putText(result, 'w: ' + str(pos_w), (center_X - 30, center_Y + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+                    cv2.putText(result, classes[obj['class']], (x, y + 15), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 0), 2)
+                    # cv2.putText(result, 'z: ' + str(pos_z), (center_X - 30, center_Y), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+                    # cv2.putText(result, 'x: ' + str(pos_x), (center_X - 30, center_Y + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
+                    # cv2.putText(result, 'w: ' + str(pos_w), (center_X - 30, center_Y + 60), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 0), 2)
 
                 # obj['pos'] = [pos_x, pos_z, pos_w/2]
                 # print obj['pos']
@@ -220,7 +223,10 @@ while not rospy.is_shutdown():
 
         for box in boxes_d:
             skip_flag = 0
+            class_idx = box[4]
+            box = box[0:4]
             xd, yd, wd, hd, center_Xd, center_Yd = get_box_info(box)
+            
             iou_max = 0.5
             for obj in curr_trackers:
                 xt, yt, wt, ht, center_Xt, center_Yt = get_box_info(obj['box'])
@@ -266,6 +272,7 @@ while not rospy.is_shutdown():
             new_obj['not_detected'] = -1
             new_obj['pos'] = [0, 0, 0] # x, y, w
             new_obj['pre_pos'] = [0, 0, 0]
+            new_obj['class'] = class_idx
             curr_trackers.append(new_obj)
 
         for obj in curr_trackers:

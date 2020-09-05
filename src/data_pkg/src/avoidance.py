@@ -9,16 +9,17 @@ import math
 import os
 from datetime import datetime
 
-def velocity_distance(obstacles, r_rob, pos, yaw, stop, phi_max, safety):
+def velocity_distance(obstacles, r_rob, pos, yaw, start, stop, phi_max, safety):
     stop = int(stop)
+    start = int(start)
     intervals = []
     append = intervals.append
-    stop = min(stop, 5)
+    stop = min(stop, start + 5)
     for obstacle in obstacles:
         r = obstacle[2] + r_rob + safety
-        for t in range(0, stop + 1):
+        for t in range(start, stop + 1):
             # print('t', t)
-            if abs(obstacle[3]) <= 0.03 and abs(obstacle[4]) <= 0.03 and t > 0:
+            if abs(obstacle[3]) <= 0.03 and abs(obstacle[4]) <= 0.03 and t > start:
                 break
             x = (obstacle[0] + obstacle[3]*t - pos[0])*sin(yaw) - (obstacle[1] + obstacle[4]*t - pos[1])*cos(yaw)
             y = (obstacle[0] + obstacle[3]*t - pos[0])*cos(yaw) + (obstacle[1] + obstacle[4]*t - pos[1])*sin(yaw)
@@ -27,12 +28,12 @@ def velocity_distance(obstacles, r_rob, pos, yaw, stop, phi_max, safety):
             if x == 0 and y == 0:
                 continue
             # if x**2 + y**2 - r**2 < 0:
-            #     if t == 0:
+            #     if t == start:
             #         print('Collided with obstacle!')
             #         r = sqrt(x**2 + y**2 - 0.01)
             #     else:
             #         break
-            if t == 0:
+            if t == start:
                 if x**2 + y**2 - (obstacle[2] + r_rob + safety)**2 > 0 and x**2 + y**2 - (obstacle[2] + r_rob + 3*safety/2)**2 <= 0:
                     r = obstacle[2] + r_rob + safety/2
                 elif x**2 + y**2 - (obstacle[2] + r_rob)**2 > 0 and x**2 + y**2 - (obstacle[2] + r_rob + safety)**2 <= 0:
@@ -457,6 +458,7 @@ while not rospy.is_shutdown():
 
         if detected_flag == 1:
             collision = []
+            t_start = []
             if len_detected > 0:
                 for j in range(i_curr, min(i_curr+path_cut, len_path-1)):
                     if j == i_curr:
@@ -473,6 +475,7 @@ while not rospy.is_shutdown():
                                 dist2 = sqrt((input_path[i + 1]['x'] - (obstacle[0] + obstacle[3]*t))**2 + (input_path[i + 1]['y'] - (obstacle[1] + obstacle[4]*t))**2)
                                 if dist1 <= obstacle[2] + r_rob + safety_margin and dist2 >= obstacle[2] + r_rob + safety_margin:
                                     collision.append(i + 1)
+                                    t_start.append(t)
                                     break
                                 i = i + 1
 
@@ -499,7 +502,7 @@ while not rospy.is_shutdown():
 
             # if sqrt((robot_pos[0] - goal[0])**2 + (robot_pos[1] - goal[1])**2) > dist_goal:
             if i_curr < i_goal or (i_curr == i_goal and i_curr == len_path-1):
-                obstacle_intervals = velocity_distance(detected, r_rob, robot_pos, robot_yaw, t_stop, phi_max, safety_margin)
+                obstacle_intervals = velocity_distance(detected, r_rob, robot_pos, robot_yaw, 0, t_stop, phi_max, safety_margin)
                 # print('obstacle_intervals', obstacle_intervals)
                 new_intervals = min_union(obstacle_intervals, phi_max, L)
                 # print('new_intervals', new_intervals)
